@@ -40,7 +40,7 @@ public class LibraryApp {
 		Library library = new Library();
 		
 		initLibrary(library);
-		//test
+		
 		
 		
 		//create instance of main frame
