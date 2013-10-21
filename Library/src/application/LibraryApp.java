@@ -41,7 +41,7 @@ public class LibraryApp {
 		
 		initLibrary(library);
 		
-		//hahaha
+		//hahahahehehe
 		
 		//create instance of main frame
 		BookMasterFrame bookMaster = new BookMasterFrame(library.getBooks(), library.getCopies().size());
