@@ -8,11 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 
 import java.awt.Dimension;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import domain.Book;
+import domain.Library;
 
 public class BookMasterFrame extends JFrame implements Observer {
 
@@ -23,10 +22,10 @@ public class BookMasterFrame extends JFrame implements Observer {
 	/**
 	 * Create the frame.
 	 */
-	public BookMasterFrame(List<Book> books, int nbrOfExemplars) {
-		this.booksPanel = new BookPanel(books, nbrOfExemplars);
-		this.loanPanel = new LoanPanel();
-		
+	public BookMasterFrame(Library library) {
+		this.booksPanel = new BookPanel(library);
+		this.loanPanel = new LoanPanel(library);
+		//List<Book> books, int nbrOfExemplars, List<Loan> loans
 		//TODO AUFTEILEN der Panels Books und Loans
 		//TODO Aufbau der Panels mit init Funktionen 
 		//sonst ist es zu unübersichtlich
@@ -36,8 +35,8 @@ public class BookMasterFrame extends JFrame implements Observer {
 		setTitle("Library");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dimension = new Dimension();
-		dimension.height = 400;
-		dimension.width = 600;
+		dimension.height = 600;
+		dimension.width = 800;
 		this.setMinimumSize(dimension);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -53,7 +52,6 @@ public class BookMasterFrame extends JFrame implements Observer {
 		
 		tabbedPane.addTab("<html><body marginwidth=10 marginheight=10>Books</body></html>", new ImageIcon(getClass().getResource("/book.png")), this.booksPanel, null);
 		
-		this.loanPanel = new JPanel();
 		tabbedPane.addTab("<html><body marginwidth=10 marginheight=10>Loans</body></html>", new ImageIcon(getClass().getResource("/switch.png")), this.loanPanel, null);
 		
 		contentPane.add(tabbedPane);

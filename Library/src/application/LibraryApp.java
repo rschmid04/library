@@ -7,6 +7,7 @@ package application;
 import java.io.File;
 import java.io.IOException;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -41,10 +42,9 @@ public class LibraryApp {
 		
 		initLibrary(library);
 		
-		//hahahahehehe
-		
+	
 		//create instance of main frame
-		BookMasterFrame bookMaster = new BookMasterFrame(library.getBooks(), library.getCopies().size());
+		BookMasterFrame bookMaster = new BookMasterFrame(library);
 		bookMaster.setVisible(true);
 
 	}
@@ -105,7 +105,7 @@ public class LibraryApp {
 			Book b = library.createAndAddBook(getTextContentOf(title, "name"));
 			b.setAuthor(getTextContentOf(title, "author"));
 			b.setPublisher(getTextContentOf(title, "publisher"));
-			b.setShelf(Shelf.A1);
+			b.setShelf(Shelf.C2);
 		}
 	}
 

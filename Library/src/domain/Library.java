@@ -1,6 +1,9 @@
 package domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Library {
@@ -53,6 +56,17 @@ public class Library {
 		}
 		return null;
 	}
+	
+	public Loan getLoanOfCopy(Copy copy)
+	{
+		for (Loan l : loans) {
+			if (l.getCopy().equals(copy) && l.isLent()) {
+				return l;
+			}
+		}
+		
+		return null;
+	}
 
 	public boolean isCopyLent(Copy copy) {
 		for (Loan l : loans) {
@@ -94,6 +108,37 @@ public class Library {
 		return lentCopies;
 	}
 	
+	public String getAvailabilityOfBook(Book b)
+	{
+		List<Copy> copies = this.getCopiesOfBook(b);
+		List<Loan> loans = this.getLentCopiesOfBook(b);
+		if(copies.size() == loans.size()){
+			//all copies are lent out, return nearest date
+			GregorianCalendar nearestDate = null;
+			for(Loan l : loans){
+				GregorianCalendar estDate = (GregorianCalendar) l.getPickupDate().clone();
+				estDate.add(GregorianCalendar.DAY_OF_YEAR, 30);
+				if(nearestDate == null){
+					nearestDate = (GregorianCalendar) estDate.clone();
+				}
+				else{
+					if(nearestDate.after(estDate)){
+						nearestDate = (GregorianCalendar) estDate.clone();
+					}
+				}
+			}
+			DateFormat f = SimpleDateFormat.getDateInstance();
+			
+			String returnString = f.format(nearestDate.getTime());
+			return returnString;
+		}
+		else{
+			
+			return String.valueOf(copies.size() - loans.size());
+		}
+		
+	}
+	
 	public List<Loan> getOverdueLoans() {
 		List<Loan> overdueLoans = new ArrayList<Loan>();
 		for ( Loan l : getLoans() ) {
@@ -105,6 +150,16 @@ public class Library {
 	
 	public List<Copy> getAvailableCopies(){
 		return getCopies(false);
+	}
+	
+	public List<Loan> getLentOutLoans(){
+		List<Loan> retLoans = new ArrayList<Loan>();
+		for (Loan l : loans) {
+			if (l.isLent()) {
+				retLoans.add(l);
+			}
+		}
+		return retLoans;
 	}
 	
 	public List<Copy> getLentOutBooks(){
